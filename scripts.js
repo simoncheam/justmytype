@@ -67,8 +67,41 @@ $(document.body).keypress(function(event) {
         
         console.log('\n\n');
 
-        currentLetterIndex =0;  //this is a fudge factor
-        currentSentenceIndex++;
+
+
+        /// Insert Gameover Condition check ----------------------
+
+        
+
+        
+        // Test from Andrew: 
+        
+        console.log(`%ccurrentSentenceIndex:\t${currentSentenceIndex}\ncurrentSentenceIndex+1:\t${currentSentenceIndex+1}\nsentences.length:\t${sentences.length}\ncurrentLetterIndex:\t${currentLetterIndex}\ncurrentSentence.length:\t${currentSentence.length}`,  'background-color: green; color: white; font-size: 2.5rem');
+        
+        
+        //add gameover check (TEST)
+        
+        if((currentSentenceIndex+1 >= sentences.length ) && (currentLetterIndex +1 >= currentSentence.length)){  // should it be >=? (sentences[currentSentenceIndex] = currentSentence) 
+        
+        /// change "sentences[currentSentenceIndex].length" >>> currentSentence.length
+        
+        console.log("GAME OVER!");
+        alert ("GAME OVER!");
+            if(confirm("do you want to reload?")){
+                window.location.reload();
+            }
+
+        } else {
+
+            currentSentenceIndex++;
+
+
+        }
+
+        /// Insert Gameover Condition check ----------------------
+
+
+        //currentLetterIndex =0;  //this is a fudge factor
 
 
         $('#feedback').empty();
@@ -92,15 +125,7 @@ $(document.body).keypress(function(event) {
         
        
         
-    
-        
        currentLetterIndex +=1;  //move to feedback section
-
-
-
-
-
-       
         
         
     }
@@ -135,9 +160,7 @@ $(document.body).keypress(function(event) {
     console.log('key pressed =  ' +keyPressed);
 
 
-    
-    
-    
+
     
     
     //////////////////               MATCHING LOGIC            ////////////
@@ -150,20 +173,6 @@ $(document.body).keypress(function(event) {
             //currentLetterIndex +=1; creates problem when moving to next sentence
         
             
-            // Test from Andrew: 
-            
-            console.log(`%ccurrentSentenceIndex:\t${currentSentenceIndex}\ncurrentSentenceIndex+1:\t${currentSentenceIndex+1}\nsentences.length:\t${sentences.length}\ncurrentLetterIndex:\t${currentLetterIndex}\ncurrentSentence.length:\t${currentSentence.length}`,  'background-color: green; color: white; font-size: 2.5rem');
-            
-            
-   //add gameover check (TEST)
-
-    if((currentSentenceIndex+1 >= sentences.length ) && (currentLetterIndex+1 >= currentSentence.length)){  // should it be >=? (sentences[currentSentenceIndex] = currentSentence) 
-        
-        /// change "sentences[currentSentenceIndex].length" >>> currentSentence.length
-        
-        console.log("GAME OVER!");
-        alert ("GAME OVER!");
-    }
         
 
 
