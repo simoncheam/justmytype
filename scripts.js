@@ -31,7 +31,10 @@ const sentences = [
 let currentSentenceIndex = 0;  //current sentence we are on
 let currentLetterIndex = 0; //
 let sentencesArrayLength = sentences.length;
-
+let numberOfMistakes = 0;
+let numberOfWords = 4;
+let Active = false;
+var theStartTime;
 
 ///                                    {{{{{            TESTING             }}}}} 
 
@@ -51,6 +54,14 @@ $(document.body).keypress(function(event) {
     let currentSentence = sentences[currentSentenceIndex];
     $('#sentence').text(currentSentence);
 
+    if(Active === false){
+        let startTime = Date.now();
+        
+        console.log('startTime: ' +startTime);
+        Active = true; 
+
+        theStartTime = startTime;
+    }
 
 
     /// CONSOLE LOGS
@@ -78,7 +89,7 @@ $(document.body).keypress(function(event) {
         
         console.log(`%ccurrentSentenceIndex:\t${currentSentenceIndex}\ncurrentSentenceIndex+1:\t${currentSentenceIndex+1}\nsentences.length:\t${sentences.length}\ncurrentLetterIndex:\t${currentLetterIndex}\ncurrentSentence.length:\t${currentSentence.length}`,  'background-color: green; color: white; font-size: 2.5rem');
         
-        
+       console.log('startTime: ' +theStartTime);
         //add gameover check (TEST)
         
         if((currentSentenceIndex+1 >= sentences.length ) && (currentLetterIndex +1 >= currentSentence.length)){  // should it be >=? (sentences[currentSentenceIndex] = currentSentence) 
@@ -86,6 +97,24 @@ $(document.body).keypress(function(event) {
         /// change "sentences[currentSentenceIndex].length" >>> currentSentence.length
         
         console.log("GAME OVER!");
+        // EndGame time calcs
+        let endTime = Date.now();
+        console.log("Start Time (miliseconds): " +theStartTime);
+        console.log("End Time (miliseconds): " +endTime);
+
+        let miliSeconds = endTime - theStartTime;
+        console.log("Your Time (miliseconds): " +miliSeconds);
+
+        let seconds = miliSeconds/1000;
+        let minutes = seconds/60;
+        let WPM = numberOfWords/minutes;
+        console.log("Your Score (Words Per Minute): " +WPM);
+
+        alert ("Here's Your Score...");
+        alert ("words per min: " +WPM);
+        alert ("number of mistakes: " +numberOfMistakes);
+
+
         alert ("GAME OVER!");
             if(confirm("do you want to reload?")){
                 window.location.reload();
@@ -101,7 +130,7 @@ $(document.body).keypress(function(event) {
         /// Insert Gameover Condition check ----------------------
 
 
-        //currentLetterIndex =0;  //this is a fudge factor
+        
 
 
         $('#feedback').empty();
@@ -112,6 +141,7 @@ $(document.body).keypress(function(event) {
       //  console.log("Sentence - REMOVED!");
 
         currentLetterIndex =0;
+        $('#yellow-block').css('left','0px');  /// reset position on new sentence
 
         //Announces NEXT sentence:
         // console.log('the NEXT currentSentence is: '+ currentSentence);
@@ -172,14 +202,6 @@ $(document.body).keypress(function(event) {
             $('#feedback').append('<p class ="d-flex">✅</p>');
             //currentLetterIndex +=1; creates problem when moving to next sentence
         
-            
-        
-
-
-            
-
-
-        
         // Add target here!
        $('#target-letter').text(sentences[currentSentenceIndex][currentLetterIndex]);  // Q: I'm not sure why I had to do this but it works? 
 
@@ -188,8 +210,8 @@ $(document.body).keypress(function(event) {
 
             //REF:  let currentLetter = sentences[currentSentenceIndex][currentLetterIndex];
 
-
             /// !!! ADD highlighting for same letter in the Sentence div !!!
+            $('#yellow-block').css('left','+=17px');  /// need to reset on new sentence
 
 
         } else if( currentLetter !== keyPressed) {
@@ -198,20 +220,19 @@ $(document.body).keypress(function(event) {
             // append red X to #feedback
             $('#feedback').append('<p class ="d-flex">❌</p>');
 
-            // Previous Letter Logs?
+            numberOfMistakes +=1;
+            console.log('numberOfMistakes: '+ numberOfMistakes);
 
-
+    
        
         console.log("previous letterIndex: " + currentLetterIndex);// current letter index check
-       // currentLetterIndex -=1;  // Had to add -=1 index reduction to stop counter from moving forward.
+       currentLetterIndex -=1;  // Had to add -=1 index reduction to stop counter from moving forward.
 
 
         };
 
 
-   //( INDEX IS OFF BY +1)
-   //$('#target-letter').text(currentLetter); /// change text of id=target-letter
-    
+      
    
             
     
@@ -227,51 +248,9 @@ $(document.body).keypress(function(event) {
 
 
 
-////
 
-//moved to negative feedback section near index counter
-
-// if((currentSentenceIndex+1 >= sentences.length ) && (currentLetterIndex+1 >= sentences[currentSentenceIndex].length)){  // should it be >=? (sentences[currentSentenceIndex] = currentSentence)
-
-//     console.log("GAME OVER!");
-//     alert ("GAME OVER!");
-// }
-///                                    {{{{{            TESTING             }}}}} 
-
-// Need to create If/Else to append sentence to id=sentence div
-
-
-///                                    {{{{{            TESTING             }}}}} 
-
-
-
-
-
-
-///                                ADD STOP CONDITION? END OF GAME
 
 });
-
-
-
-
-
-
-
-
-
-
-//ideas:
-
-
-// jump to next sentence when current letter index is >= sentence length
-
-// stop condition : use if statement then confirm alert
-
-
-
-// *Hint: the letters should be matched with the corresponding ascii code. The id value of the key in the html corresponds to the ASCII character code that you can access in the keyboard listener. For example, ascii value 65 is A, and 97 is a. Search for ASCII character chart to see a complete list of codes. 
-
 
 
 
@@ -298,17 +277,7 @@ $(document.body).keypress(function(event){
 
     //////////////////               MATCHING LOGIC            ////////////
 
-            // if(keyPressed == currentLetter-1){
-
-            // console.log('*** GREEN CHECK!!!! ***')
-            
-
-
-            // } else if( currentLetter !== keyPressed) {
-            // console.log('XXX RED X!!!! XXX' )
-            // console.log('current letter = ' +currentLetter )
-            // console.log('key pressed = ' +keyPressed )
-            // };
+         
 
     //////////////////               MATCHING LOGIC            ////////////
 

@@ -8,11 +8,11 @@
   font-size: 24px;
   letter-spacing: 3px;
 }
-
+/* width changed to 10 from 15px */
 #yellow-block {
   position: absolute;
   margin-top: 10px;
-  width: 15px;
+  width: .10px; 
   height: 15px;
   background-color: yellow;
 }
