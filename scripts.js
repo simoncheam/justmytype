@@ -22,7 +22,7 @@ $('#keyboard-upper-container').hide();
 
 const sentences = [
     
-    'the quick.',  //brown fox
+    'the quick',  //brown fox
     'jumped over' //the lazy dog
     
 ];
@@ -54,19 +54,23 @@ $(document.body).keypress(function(event) {
 
 
     /// CONSOLE LOGS
-    console.log('currentSentence: '+ currentSentence);
+   // console.log('currentSentence: '+ currentSentence);
    // console.log('currentSentenceIndex: '+ currentSentenceIndex);
     
 
-    console.log("current letter: " + currentLetter);
-    console.log("current letterIndex: " + currentLetterIndex);
+   // console.log("current letter: " + currentLetter); // actually previous values after key press
+  //  console.log("current letterIndex: " + currentLetterIndex); // actually previous values after key press
    // console.log("current Sentence.Length: " + currentSentence.length);
     
     // !!!!  LETTER INDEX COUNTER !!!!!!! (^^^^^^^^ This works! ^^^^^^^^)
     if(currentLetterIndex +1 >= sentences[currentSentenceIndex].length){  // this is the current sent row length
         
         console.log('\n\n');
+
+        currentLetterIndex =0;  //this is a fudge factor
         currentSentenceIndex++;
+
+
         $('#feedback').empty();
       //  console.log("Feedback - REMOVED!");
 
@@ -79,15 +83,24 @@ $(document.body).keypress(function(event) {
         //Announces NEXT sentence:
         // console.log('the NEXT currentSentence is: '+ currentSentence);
 
-        console.log('the NEXT currentSentence is: '+ sentences[currentSentenceIndex]);
+        //console.log('the NEXT currentSentence is: '+ sentences[currentSentenceIndex]);
 
         $('#sentence').text(sentences[currentSentenceIndex]);
 
         
     } else {
-        currentLetterIndex +=1;
+        
+       
+        
+    
+        
+       currentLetterIndex +=1;  //move to feedback section
 
-        //$('#target-letter').text(currentLetter);
+
+
+
+
+       
         
         
     }
@@ -121,31 +134,57 @@ $(document.body).keypress(function(event) {
    // console.log('keyID =  ' +keyID);
     console.log('key pressed =  ' +keyPressed);
 
-//////////////////               MATCHING LOGIC            ////////////
 
-        if(keyPressed == currentLetter){
-
-        //console.log('*** GREEN CHECK!!!! ***')
-        //currentLetter++;
-
+    
+    
+    
+    
+    
+    //////////////////               MATCHING LOGIC            ////////////
+    
+    if(keyPressed == currentLetter){
+        
         // append green check to #feedback
-
+    
             $('#feedback').append('<p class ="d-flex">✅</p>');
+            //currentLetterIndex +=1; creates problem when moving to next sentence
+        
+            
+            // Test from Andrew: 
+            
+            console.log(`%ccurrentSentenceIndex:\t${currentSentenceIndex}\ncurrentSentenceIndex+1:\t${currentSentenceIndex+1}\nsentences.length:\t${sentences.length}\ncurrentLetterIndex:\t${currentLetterIndex}\ncurrentSentence.length:\t${currentSentence.length}`,  'background-color: green; color: white; font-size: 2.5rem');
+            
+            
+   //add gameover check (TEST)
 
-            // $('#feedback').append('<div><i class="bi bi-check"></i></div>');
+    if((currentSentenceIndex+1 >= sentences.length ) && (currentLetterIndex+1 >= currentSentence.length)){  // should it be >=? (sentences[currentSentenceIndex] = currentSentence) 
+        
+        /// change "sentences[currentSentenceIndex].length" >>> currentSentence.length
+        
+        console.log("GAME OVER!");
+        alert ("GAME OVER!");
+    }
+        
 
 
             
 
 
+        
         // Add target here!
-       $('#target-letter').text(sentences[currentSentenceIndex][currentLetterIndex]);  // Q: I'm not sure why I had to do this but it works?
+       $('#target-letter').text(sentences[currentSentenceIndex][currentLetterIndex]);  // Q: I'm not sure why I had to do this but it works? 
+
+       //$('#target-letter').text(currentLetter);  //test replacement
+
+
+            //REF:  let currentLetter = sentences[currentSentenceIndex][currentLetterIndex];
+
 
             /// !!! ADD highlighting for same letter in the Sentence div !!!
 
 
         } else if( currentLetter !== keyPressed) {
-        //console.log('XXX RED X!!!! XXX' )
+        
 
             // append red X to #feedback
             $('#feedback').append('<p class ="d-flex">❌</p>');
@@ -153,24 +192,13 @@ $(document.body).keypress(function(event) {
             // Previous Letter Logs?
 
 
-        console.log('previous letter = ' +currentLetter )
-        console.log('key pressed = ' +keyPressed )
+       
         console.log("previous letterIndex: " + currentLetterIndex);// current letter index check
-        currentLetterIndex -=1;  // Had to add -=1 index reduction to stop counter from moving forward.
+       // currentLetterIndex -=1;  // Had to add -=1 index reduction to stop counter from moving forward.
 
 
         };
 
-
-
-
-
-
-  
-    
-
-    
-   //  $('#target-letter').append(currentLetter); /// Append letter to id=target-letter
 
    //( INDEX IS OFF BY +1)
    //$('#target-letter').text(currentLetter); /// change text of id=target-letter
@@ -178,19 +206,27 @@ $(document.body).keypress(function(event) {
    
             
     
-
 //     // GAME OVER Condition
     
 // };
 
-console.log("GAME OVER TEST: currentSentenceIndex " +currentSentenceIndex);
-console.log("GAME OVER TEST: sentences.length " +sentences.length);
+// console.log("GAME OVER TEST: currentSentenceIndex  :" + currentSentenceIndex );
+// console.log("GAME OVER TEST: sentences.length " +sentences.length);
+// console.log("GAME OVER TEST: currentLetterIndex :" +currentLetterIndex );
+// console.log("GAME OVER TEST: currentSentence.length " +currentSentence.length);
 
-if(currentSentenceIndex+1 === sentences.length ){  // should it be >=?
 
-    console.log("GAME OVER!");
-    alert ("GAME OVER!");
-}
+
+
+////
+
+//moved to negative feedback section near index counter
+
+// if((currentSentenceIndex+1 >= sentences.length ) && (currentLetterIndex+1 >= sentences[currentSentenceIndex].length)){  // should it be >=? (sentences[currentSentenceIndex] = currentSentence)
+
+//     console.log("GAME OVER!");
+//     alert ("GAME OVER!");
+// }
 ///                                    {{{{{            TESTING             }}}}} 
 
 // Need to create If/Else to append sentence to id=sentence div
@@ -218,7 +254,7 @@ if(currentSentenceIndex+1 === sentences.length ){  // should it be >=?
 
 //ideas:
 
-// when keypress >>> letterindex++
+
 // jump to next sentence when current letter index is >= sentence length
 
 // stop condition : use if statement then confirm alert
@@ -256,7 +292,7 @@ $(document.body).keypress(function(event){
             // if(keyPressed == currentLetter-1){
 
             // console.log('*** GREEN CHECK!!!! ***')
-            // //currentLetter++;
+            
 
 
             // } else if( currentLetter !== keyPressed) {
