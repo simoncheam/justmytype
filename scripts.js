@@ -3,53 +3,39 @@
 // use .attr function to hide uppercase keyboard
 $('#keyboard-upper-container').hide();
 
+/// Insert array info:
 
-//when shift pressed:
-//$('#keyboard-upper-container').show();
-
-
-// ----------Need:
-
-// 1. sentence  = which string do we need
-// 2. phrase ==  which letter in the word
-// sentenceArrayLength = sentences.length
-
-// -------------logic: 
-// track where we are (sentence index, current letter index)
-
-
-/// Insert array info
-
-const sentences = [
+//test sentences
+// const sentences = [
     
-    'the quick',  //brown fox
-    'jumped over' //the lazy dog
+//     'the quick',  //brown fox
+//     'jumped over' //the lazy dog
     
-];
+// ];
+
+let sentences = ['ten ate neite ate nee enet ite ate inet ent eate', 'Too ato too nOt enot one totA not anot tOO aNot', 'oat itain oat tain nate eate tea anne inant nean', 'itant eate anot eat nato inate eat anot tain eat', 'nee ene ate ite tent tiet ent ine ene ete ene ate'];
+
+
 /// Create indexing logic
 
 let currentSentenceIndex = 0;  //current sentence we are on
 let currentLetterIndex = 0; //
 let sentencesArrayLength = sentences.length;
 let numberOfMistakes = 0;
-let numberOfWords = 4;
+let numberOfWords = 54; // <<<<<<<<<<<<<<<<<<<< ! ! ! This number is hard coded
 let Active = false;
 var theStartTime;
-
-///                                    {{{{{            TESTING             }}}}} 
 
 let currentLetter = sentences[currentSentenceIndex][currentLetterIndex];
 let currentSentence = sentences[currentSentenceIndex];
 
-$('#target-letter').text(currentLetter); /// change text of id=target-letter (needs to move - target print happening before logic check)h
+$('#target-letter').text(currentLetter); 
 
 $('#sentence').text(currentSentence);
 
 $(document.body).keypress(function(event) {
     
-    let currentLetter = sentences[currentSentenceIndex][currentLetterIndex]; // Q: why do we put this inside the keypress function?
-
-   // $('#target-letter').text(currentLetter);
+    let currentLetter = sentences[currentSentenceIndex][currentLetterIndex]; 
 
     let currentSentence = sentences[currentSentenceIndex];
     $('#sentence').text(currentSentence);
@@ -73,47 +59,41 @@ $(document.body).keypress(function(event) {
   //  console.log("current letterIndex: " + currentLetterIndex); // actually previous values after key press
    // console.log("current Sentence.Length: " + currentSentence.length);
     
-    // !!!!  LETTER INDEX COUNTER !!!!!!! (^^^^^^^^ This works! ^^^^^^^^)
+    //   LETTER INDEX COUNTER 
     if(currentLetterIndex +1 >= sentences[currentSentenceIndex].length){  // this is the current sent row length
         
-        console.log('\n\n');
-
-
-
+       
         /// Insert Gameover Condition check ----------------------
-
-        
-
-        
         // Test from Andrew: 
         
         console.log(`%ccurrentSentenceIndex:\t${currentSentenceIndex}\ncurrentSentenceIndex+1:\t${currentSentenceIndex+1}\nsentences.length:\t${sentences.length}\ncurrentLetterIndex:\t${currentLetterIndex}\ncurrentSentence.length:\t${currentSentence.length}`,  'background-color: green; color: white; font-size: 2.5rem');
         
        console.log('startTime: ' +theStartTime);
-        //add gameover check (TEST)
         
-        if((currentSentenceIndex+1 >= sentences.length ) && (currentLetterIndex +1 >= currentSentence.length)){  // should it be >=? (sentences[currentSentenceIndex] = currentSentence) 
         
-        /// change "sentences[currentSentenceIndex].length" >>> currentSentence.length
+        if((currentSentenceIndex+1 >= sentences.length ) && (currentLetterIndex +1 >= currentSentence.length)){   
+        
         
         console.log("GAME OVER!");
+
         // EndGame time calcs
         let endTime = Date.now();
         console.log("Start Time (miliseconds): " +theStartTime);
         console.log("End Time (miliseconds): " +endTime);
 
         let miliSeconds = endTime - theStartTime;
+
         console.log("Your Time (miliseconds): " +miliSeconds);
 
         let seconds = miliSeconds/1000;
         let minutes = seconds/60;
         let WPM = numberOfWords/minutes;
+
         console.log("Your Score (Words Per Minute): " +WPM);
 
-        alert ("Here's Your Score...");
+        alert ("Took you long enough! Click OK to see your score...");
         alert ("words per min: " +WPM);
         alert ("number of mistakes: " +numberOfMistakes);
-
 
         alert ("GAME OVER!");
             if(confirm("do you want to reload?")){
@@ -121,67 +101,31 @@ $(document.body).keypress(function(event) {
             }
 
         } else {
-
             currentSentenceIndex++;
-
-
         }
 
-        /// Insert Gameover Condition check ----------------------
-
-
-        
-
+        /// END of Gameover Condition check ----------------------
 
         $('#feedback').empty();
       //  console.log("Feedback - REMOVED!");
 
         $('#sentence').empty();
-        
       //  console.log("Sentence - REMOVED!");
 
         currentLetterIndex =0;
-        $('#yellow-block').css('left','0px');  /// reset position on new sentence
+        $('#yellow-block').css('left','0px');  /// reset highlight position on new sentence
 
-        //Announces NEXT sentence:
-        // console.log('the NEXT currentSentence is: '+ currentSentence);
-
-        //console.log('the NEXT currentSentence is: '+ sentences[currentSentenceIndex]);
-
+        // NEXT sentence added:
         $('#sentence').text(sentences[currentSentenceIndex]);
 
-        
     } else {
-        
-       
-        
-       currentLetterIndex +=1;  //move to feedback section
-        
+       currentLetterIndex +=1;  //increment letter +1
         
     }
     
-    /// !!!!!!!!!!!!!!!!!  NEXT SENTENCE Counter -------------------------------------
-    console.log('currentSentence.length: '+currentSentence.length);
-    
-        if (currentLetterIndex +1 === currentSentence.length){
-            //$('#sentence').remove(currentSentence);
-            // $('#sentence').append(currentSentence); does not work in sentence counter
-            console.log('NEXT SENTENCE!');
+   
 
 
-            /// !!! Clear #feedback here
-            //$('#feedback').empty(); 
-
-    
-           
-        }
-    /// !!!!!!!!!!!!!!!!!  NEXT SENTENCE Counter -------------------------------------
-
-      
-
-
-
-//////////////////               MATCHING LOGIC            ////////////
 
 
     const keyID = event.originalEvent.which;
@@ -190,9 +134,6 @@ $(document.body).keypress(function(event) {
     console.log('key pressed =  ' +keyPressed);
 
 
-
-    
-    
     //////////////////               MATCHING LOGIC            ////////////
     
     if(keyPressed == currentLetter){
@@ -202,61 +143,26 @@ $(document.body).keypress(function(event) {
             $('#feedback').append('<p class ="d-flex">✅</p>');
             //currentLetterIndex +=1; creates problem when moving to next sentence
         
-        // Add target here!
-       $('#target-letter').text(sentences[currentSentenceIndex][currentLetterIndex]);  // Q: I'm not sure why I had to do this but it works? 
+        // Add target letter here!
+       $('#target-letter').text(sentences[currentSentenceIndex][currentLetterIndex]);  
 
-       //$('#target-letter').text(currentLetter);  //test replacement
-
-
-            //REF:  let currentLetter = sentences[currentSentenceIndex][currentLetterIndex];
-
-            /// !!! ADD highlighting for same letter in the Sentence div !!!
-            $('#yellow-block').css('left','+=17px');  /// need to reset on new sentence
-
+        $('#yellow-block').css('left','+=17.5px');  /// need to reset on new sentence
 
         } else if( currentLetter !== keyPressed) {
         
-
             // append red X to #feedback
             $('#feedback').append('<p class ="d-flex">❌</p>');
 
             numberOfMistakes +=1;
             console.log('numberOfMistakes: '+ numberOfMistakes);
 
-    
-       
         console.log("previous letterIndex: " + currentLetterIndex);// current letter index check
-       currentLetterIndex -=1;  // Had to add -=1 index reduction to stop counter from moving forward.
-
+        currentLetterIndex -=1;  // Had to add -=1 index reduction to stop counter from moving forward.
 
         };
 
 
-      
-   
-            
-    
-//     // GAME OVER Condition
-    
-// };
-
-// console.log("GAME OVER TEST: currentSentenceIndex  :" + currentSentenceIndex );
-// console.log("GAME OVER TEST: sentences.length " +sentences.length);
-// console.log("GAME OVER TEST: currentLetterIndex :" +currentLetterIndex );
-// console.log("GAME OVER TEST: currentSentence.length " +currentSentence.length);
-
-
-
-
-
-
 });
-
-
-
-
-
-
 
 
 //sensitivty and casing
@@ -264,7 +170,6 @@ $(document.body).keypress(function(event) {
 /// includes nested functions (majority of lab)
 $(document.body).keypress(function(event){
 
- //   console.log('keydown!  ');
  //   console.log(event.originalEvent.which);  //         prints Ascii #
     let currentLetter = sentences[currentSentenceIndex][currentLetterIndex];
 
@@ -273,16 +178,6 @@ $(document.body).keypress(function(event){
     // console.log('keyID =  ' +keyID);
     // console.log('key pressed =  ' +keyPressed);
     
-
-
-    //////////////////               MATCHING LOGIC            ////////////
-
-         
-
-    //////////////////               MATCHING LOGIC            ////////////
-
-    // !!!!!{{{{{{{{{{{{{{{ INSERT KEY ID jQuery ANIMATION }}}}}}}}}}}}}}}
-        //use setTimout(function(){
 
      $("#"+keyID).css("background-color","yellow");
      setTimeout(function(){
